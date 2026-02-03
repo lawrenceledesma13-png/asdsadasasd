@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Card</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ffd1dc, #ffb3c6);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* ================= ENVELOPE ================= */
+.envelope-container {
+  width: 320px;
+  height: 280px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heart-envelope {
+  width: 100%;
+  height: 100%;
+  background: url('/mnt/data/5390ad17-4de8-4e8a-a4fb-2c3a5bfee545.png') no-repeat center/contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 0 12px rgba(0,0,0,.5);
+  animation: heartbeat 1.5s infinite;
+  filter: drop-shadow(0 0 20px #ff4d88);
+  position: relative;
+  overflow: hidden;
+}
+
+.heart-envelope::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.4) 50%,
+    transparent 70%
+  );
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.heart-envelope.open {
+  animation: none;
+  transform: scale(1.2) rotate(360deg);
+}
+
+/* ================= GLITTER ================= */
+.glitter {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #fff, 0 0 20px #ff69b4;
+  animation: glitter 1s forwards;
+}
+
+@keyframes glitter {
+  0% { opacity: 0; transform: scale(.3); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--x), var(--y)); }
+}
+
+/* ================= CARD ================= */
+.card {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: linear-gradient(135deg, #ffd1dc, #ffb3c6);
+  text-align: center;
+  padding-top: 40px;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "❤ ❤ ❤ ❤ ❤ ❤ ❤ ❤ ❤ ❤";
+  position: absolute;
+  inset: 0;
+  font-size: 40px;
+  color: rgba(255,255,255,.15);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  pointer-events: none;
+}
+
+h1 {
+  color: #3b0a17;
+  text-shadow: 0 0 15px #fff;
+  position: relative;
+}
+
+/* ================= PHOTOS ================= */
+.photo-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.photo {
+  background: linear-gradient(135deg, #ff85a2, #ffd1dc);
+  padding: 8px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255,105,180,.8);
+  animation: float 4s ease-in-out infinite;
+  position: relative;
+}
+
+.photo::before,
+.photo::after {
+  content: "❤";
+  position: absolute;
+  font-size: 22px;
+  color: white;
+  text-shadow: 0 0 10px #ff4d88;
+}
+
+.photo::before { top: -10px; left: -10px; }
+.photo::after { bottom: -10px; right: -10px; }
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.side { width: 200px; height: 200px; }
+.middle {
+  width: 260px;
+  height: 260px;
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(255,20,147,1);
+  animation: float 1s ease-in-out infinite;
+}
+
+/* Bottom photos */
+.bottom-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.small-photo {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #ffb3c6, #ffd6e8);
+  padding: 4px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255,105,180,.6);
+  animation: float 1s ease-in-out infinite;
+}
+
+.small-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  animation: float 1s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+/* ================= FIREWORKS ================= */
+.firework {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) scale(0.1); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= MUSIC ================= -->
+<audio id="bgMusic" autoplay loop>
+  <source src="C:\Users\Lawrence\Downloads\Olivia Dean - So Easy (To Fall In Love) (Lyrics).mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<div class="envelope-container" onclick="openCard()">
+  <div class="heart-envelope" id="heart">
+    Click to Open 💌
+  </div>
+</div>
+
+<div class="card" id="card">
+  <h1>Happy Valentine’s Day, Adrii. ❤️</h1>
+
+  <div class="photo-row">
+    <div class="photo side">
+      <img src="https://i.pinimg.com/736x/5e/5c/49/5e5c4943708cf425204e448d185e245b.jpg">
+    </div>
+    <div class="photo middle">
+      <img src="https://i.pinimg.com/736x/b5/52/e3/b552e37d4864108a86d9096630f6fa4d.jpg">
+    </div>
+    <div class="photo side">
+      <img src="https://i.pinimg.com/736x/cd/1b/50/cd1b5074cd634e1e5b18bb0cc4bd0229.jpg">
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="small-photo">
+      <img src="https://i.pinimg.com/1200x/f2/dd/27/f2dd271e078f97e4161b43710919da1b.jpg">
+    </div>
+    <div class="small-photo">
+      <img src="https://preview.redd.it/since-the-sites-down-enjoy-this-image-of-bald-gojo-v0-i4akyxkax09g1.jpeg?auto=webp&s=1733493c0ea4d5e3d2ac9e0b96086ea7218f03d5">
+    </div>
+    <div class="small-photo">
+      <img src="https://i.pinimg.com/736x/ba/4e/07/ba4e0765cecfbe89a98d4204041341d6.jpg">
+    </div>
+  </div>
+</div>
+
+<script>
+function createFirework(x, y) {
+  for (let i = 0; i < 40; i++) {
+    const fw = document.createElement("div");
+    fw.className = "firework";
+    fw.style.left = x + "px";
+    fw.style.top = y + "px";
+    fw.style.background = `hsl(${Math.random() * 360},100%,70%)`;
+    fw.style.setProperty("--x", `${Math.random()*300 - 150}px`);
+    fw.style.setProperty("--y", `${Math.random()*300 - 150}px`);
+    document.body.appendChild(fw);
+    setTimeout(() => fw.remove(), 1200);
+  }
+}
+
+function openCard() {
+  const heart = document.getElementById("heart");
+  heart.classList.add("open");
+
+  for (let i = 0; i < 30; i++) {
+    const g = document.createElement("div");
+    g.className = "glitter";
+    g.style.setProperty("--x", `${Math.random()*300-150}px`);
+    g.style.setProperty("--y", `${Math.random()*300-150}px`);
+    heart.appendChild(g);
+    setTimeout(() => g.remove(), 1000);
+  }
+
+  setTimeout(() => {
+    document.querySelector(".envelope-container").style.display = "none";
+    document.getElementById("card").style.display = "block";
+
+    // 🎆 Fireworks burst
+    for (let i = 0; i < 1000; i++) {
+      setTimeout(() => {
+        createFirework(
+          Math.random() * window.innerWidth,
+          Math.random() * window.innerHeight / 2
+        );
+      }, i * 400);
+    }
+  }, 1200);
+}
+
+// Optional: auto-play music when card opens (for mobile)
+document.querySelector(".envelope-container").addEventListener("click", () => {
+  const music = document.getElementById("bgMusic");
+  music.play();
+});
+</script>
+
+</body>
+</html>
